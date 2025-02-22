@@ -36,6 +36,11 @@ def main(command, dry_run, force):
         all_containers.extend(get_containers_from_compose(compose_file))
 
     if dry_run:
+        print(
+            "Dry Run - NAS mount point is {}.".format(
+                "active" if is_mount_active(mount_point) else "inactive"
+            )
+        )
         print("Dry Run - Containers with NAS mount dependencies:")
         for container in set(all_containers):
             print(container)
