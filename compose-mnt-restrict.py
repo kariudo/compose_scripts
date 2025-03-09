@@ -47,7 +47,9 @@ def main(command, dry_run, force):
         return
 
     if force:
-        print("Force mode enabled. Stopping all containers involved.")
+        print(
+            "Force mode enabled. Calling {} on all containers involved.".format(command)
+        )
 
     match command:
         case "stop":
@@ -71,7 +73,7 @@ def main(command, dry_run, force):
             if is_mount_active(mount_point) or force:
                 if force:
                     print(
-                        "Force mode enabled. Starting all containers involved is a bad idea."
+                        "Force mode enabled. Starting all containers involved without checking for mounts is probably a bad idea."
                     )
                     confirm = input(
                         "Are you sure you want to start all containers? (y/N) "
@@ -81,7 +83,7 @@ def main(command, dry_run, force):
                         exit(0)
                 print("Starting NAS dependent containers:")
                 for container in all_containers:
-                    print(f"Stopping container: {container}")
+                    print(f"Starting container: {container}")
                     subprocess.run(
                         [
                             "docker",
